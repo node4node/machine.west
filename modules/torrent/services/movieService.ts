@@ -1,8 +1,10 @@
 import { IMovieService } from "./interfaces";
 import { ITorrentRepo } from "../repos/interfaces";
+import { injectable, inject } from "tsyringe";
 
+@injectable()
 export class MovieService implements IMovieService {
-  constructor(private repo: ITorrentRepo) {}
+  constructor(@inject("ITorrentRepo") private repo: ITorrentRepo) {}
   async getMovieIn4k(movieTitle: string): Promise<any[]> {
     const query = `${movieTitle} 2160`;
     const movies = await this.repo.findMovies(query);
