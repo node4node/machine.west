@@ -1,0 +1,30 @@
+{
+  "name": "machine.west",
+  "version": "1.0.0",
+  "description": "Something I shouldn't be doing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "nodemon index.ts",
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "nodedom",
+    "machine.west",
+    "easton"
+  ],
+  "author": "nodedom",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^12.12.31",
+    "nodemon": "^2.0.2",
+    "prettier": "^2.0.2",
+    "ts-node": "^8.8.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "torrent-search-api": "^2.1.1"
+  }
+}

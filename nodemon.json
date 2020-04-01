@@ -1,0 +1,8 @@
+{
+    "restartable": "rs",
+    "verbose" : true,
+    "ext" : "js, ts, json",
+    "execMap" : {
+        "ts" : "npx ts-node"
+    }
+}
