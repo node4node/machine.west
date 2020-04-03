@@ -28,6 +28,7 @@
     "dotenv": "^8.2.0",
     "reflect-metadata": "^0.1.13",
     "torrent-search-api": "^2.1.1",
-    "tsyringe": "^4.1.0"
+    "tsyringe": "^4.1.0",
+    "winston": "^3.2.1"
   }
 }
