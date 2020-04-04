@@ -4,7 +4,7 @@
   "description": "Something I shouldn't be doing.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "tsc",
     "dev": "nodemon index.ts",
     "start": "node src/index.js"
@@ -17,9 +17,12 @@
   "author": "nodedom",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^25.2.1",
     "@types/node": "^12.12.31",
+    "jest": "^25.2.7",
     "nodemon": "^2.0.2",
     "prettier": "^2.0.2",
+    "ts-jest": "^25.3.1",
     "ts-node": "^8.8.1",
     "typescript": "^3.8.3"
   },
