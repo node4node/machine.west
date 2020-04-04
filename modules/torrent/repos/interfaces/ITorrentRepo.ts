@@ -1,3 +1,3 @@
 export interface ITorrentRepo {
-  findMovies(query: string, limit?: number): Promise<any>;
+  findMovies(query: string, limit?: 25 | 50 | 100): Promise<any>;
 }

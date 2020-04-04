@@ -6,11 +6,7 @@ import { injectable, inject } from "tsyringe";
 export class MovieService implements IMovieService {
   constructor(@inject("ITorrentRepo") private repo: ITorrentRepo) {}
   async getMovieIn4k(movieTitle: string): Promise<any[]> {
-    const query = `${movieTitle} 2160`;
-    const movies = await this.repo.findMovies(query);
-    return movies.map((x: { title: any; magnet: any }) => ({
-      title: x.title,
-      magnet: x.magnet,
-    }));
+    const movies = await this.repo.findMovies(movieTitle);
+    return movies;
   }
 }

@@ -8,7 +8,7 @@ LOGGER.info(`Current environment: [ ${CURRENT_ENVIRONMENT} ] `, {
   context: "Index.ts",
 });
 movieController1
-  .getMovieInTopQuality("")
+  .getMovieInTopQuality("Avengers")
   .then((movies) => {
     console.log(movies);
   })

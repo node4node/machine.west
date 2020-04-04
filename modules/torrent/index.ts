@@ -4,9 +4,9 @@ import * as SERVICES from "./services";
 import * as REPOSITORIES from "./repos";
 import * as CONTROLLERS from "./controllers";
 import { LOGGER } from "../../utils";
-const TorrentClient = require("torrent-search-api");
+const TorrentClient = require("rarbg-api");
 
-TorrentClient.enablePublicProviders();
+// TorrentClient.enablePublicProviders();
 
 container.register("ITorrentClient", {
   useValue: TorrentClient,
