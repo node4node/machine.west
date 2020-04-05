@@ -8,6 +8,18 @@ export class TorrentRepo implements ITorrentRepo {
   constructor(
     @inject("ITorrentClient") private torrentClient: ITorrentClient
   ) {}
+  async getByImdbId(id: string): Promise<any> {
+    const movie = await this.torrentClient.search(
+      id,
+      {
+        format: "json_extended",
+        sort: "seeders",
+      },
+      "imdb"
+    );
+
+    return movie;
+  }
   public async findMovies(
     query: string,
     limit: 25 | 50 | 100 = 25

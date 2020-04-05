@@ -14,8 +14,13 @@ describe("A MovieController", () => {
   test("Should return movies with 'Avenge' in the title", async () => {
     const result = await movieController.getMovieInTopQuality("Avenge");
     expect(result.length).toBeGreaterThanOrEqual(1);
-    console.log(result[0]);
     const { title } = result[0];
     expect(title).toMatch("Avenge");
+  });
+
+  test("Should return movie with imdb ID 'tt1598778'", async () => {
+    const result = await movieController.getMovieByImdbId("tt1598778");
+    const { imdb_id } = result;
+    expect(imdb_id).toEqual<string>("tt1598778");
   });
 });

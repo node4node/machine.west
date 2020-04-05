@@ -1,5 +1,6 @@
 import { Logger } from "winston";
 import { autoInjectable, inject } from "tsyringe";
+import { isTokenDescriptor } from "tsyringe/dist/typings/providers/injection-token";
 
 // @ts-ignore
 @autoInjectable()
@@ -16,4 +17,6 @@ export abstract class CoreController {
       context: this.constructor.name,
     });
   }
+
+  protected send<T>(data: any): any {}
 }
