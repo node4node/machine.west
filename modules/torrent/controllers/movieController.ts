@@ -19,7 +19,7 @@ export class MovieController extends CoreController {
     let movie = await this.movieService.getMovieByImdbId(id);
     movie = {
       category: movie.category,
-      downloadLink: movie.magnetLink,
+      downloadLink: movie.download,
       imdb_id: movie.episode_info?.imdb,
       moviedb_id: movie.episode_info?.themoviedb,
       size: movie.size,
