@@ -9,23 +9,16 @@ export class MovieController extends CoreController {
     super();
   }
 
-  public async getMovieInTopQuality(movieTitle: string): Promise<any> {
+  public async getMovieInTopQuality(movieTitle: string): Promise<MovieDTO[]> {
     this.log(`getMovieInTopQuality() Movie title: ${movieTitle}`);
-    return this.movieService.getMovieIn4k(movieTitle);
+    const movies = await this.movieService.getMovieIn4k(movieTitle);
+    return this.send(movies);
   }
 
   public async getMovieByImdbId(id: string): Promise<MovieDTO> {
     this.log(`getMovieByImdbId() IMDB ID: ${id}`);
-    let movie = await this.movieService.getMovieByImdbId(id);
-    movie = {
-      category: movie.category,
-      downloadLink: movie.download,
-      imdb_id: movie.episode_info?.imdb,
-      moviedb_id: movie.episode_info?.themoviedb,
-      size: movie.size,
-      title: movie.title,
-    };
+    const movie = await this.movieService.getMovieByImdbId(id);
     this.log(`getMovieByImdbId() Movie: ${JSON.stringify(movie)}`);
-    return movie;
+    return this.send(movie);
   }
 }

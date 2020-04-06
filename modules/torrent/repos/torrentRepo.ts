@@ -1,6 +1,8 @@
 import { ITorrentRepo } from "./interfaces";
 import { ITorrentClient } from "./interfaces/ITorrentClient";
 import { injectable, inject } from "tsyringe";
+import { Movie } from "../models/movie";
+import { MovieMAPPER as MAPPER } from "../mappers/movieMapper";
 const { CATEGORY } = require("rarbg-api");
 
 @injectable()
@@ -8,8 +10,8 @@ export class TorrentRepo implements ITorrentRepo {
   constructor(
     @inject("ITorrentClient") private torrentClient: ITorrentClient
   ) {}
-  async getByImdbId(id: string): Promise<any> {
-    const movie = await this.torrentClient.search(
+  async getByImdbId(id: string): Promise<Movie[]> {
+    const movies = await this.torrentClient.search(
       id,
       {
         format: "json_extended",
@@ -18,18 +20,18 @@ export class TorrentRepo implements ITorrentRepo {
       "imdb"
     );
 
-    return movie;
+    return movies.map(MAPPER.toDomain);
   }
   public async findMovies(
     query: string,
     limit: 25 | 50 | 100 = 25
-  ): Promise<any> {
+  ): Promise<Movie[]> {
     const movies = await this.torrentClient.search(query, {
       limit: limit,
       category: CATEGORY["4K"],
       sort: "seeders",
       format: "json_extended",
     });
-    return movies;
+    return movies.map(MAPPER.toDomain);
   }
 }
