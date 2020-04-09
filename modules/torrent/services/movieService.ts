@@ -2,10 +2,27 @@ import { IMovieService } from "./interfaces";
 import { ITorrentRepo } from "../repos/interfaces";
 import { injectable, inject } from "tsyringe";
 import { Movie } from "../models/movie";
+import { QUALITIES } from "../../../utils";
 
 @injectable()
 export class MovieService implements IMovieService {
   constructor(@inject("ITorrentRepo") private repo: ITorrentRepo) {}
+  async getMovie(keyword: string, movie_quality: QUALITIES): Promise<Movie> {
+    const movies = await this.repo.findMovies(keyword, 100);
+    const best: Movie = this.extractIdeal(movies, movie_quality);
+    return best;
+  }
+
+  private extractIdeal(movies: Movie[], movie_quality: QUALITIES): Movie {
+    let movies_of_certain_quality = movies.filter((x) =>
+      x.title.match(movie_quality)
+    );
+    movies_of_certain_quality = movies_of_certain_quality.sort(
+      (a, b) => a.size - b.size
+    );
+    const ideal_movie = movies_of_certain_quality[0];
+    return ideal_movie;
+  }
   async getMovieByImdbId(id: string): Promise<Movie> {
     try {
       const movie = await this.repo.getByImdbId(id);

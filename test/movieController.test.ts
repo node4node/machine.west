@@ -1,5 +1,6 @@
 import { TorrentModule } from "../modules";
 import { MovieController } from "../modules/torrent/controllers";
+import { QUALITIES } from "../utils";
 
 describe("A MovieController", () => {
   let movieController: MovieController;
@@ -16,6 +17,15 @@ describe("A MovieController", () => {
     expect(result.length).toBeGreaterThanOrEqual(1);
     const { title } = result[0];
     expect(title).toMatch("Avenge");
+  });
+
+  test("Should return movie with specified quality", async () => {
+    const result = await movieController.getMovie(
+      "Wolf Of Wall Street",
+      QUALITIES["1080p"]
+    );
+
+    expect(result.title).toMatch("1080p");
   });
 
   test("Should return movie with imdb ID 'tt1598778'", async () => {

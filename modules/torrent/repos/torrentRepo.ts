@@ -28,7 +28,7 @@ export class TorrentRepo implements ITorrentRepo {
   ): Promise<Movie[]> {
     const movies = await this.torrentClient.search(query, {
       limit: limit,
-      category: CATEGORY["4K"],
+      category: CATEGORY["MOVIES"],
       sort: "seeders",
       format: "json_extended",
     });
