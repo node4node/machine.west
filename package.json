@@ -4,6 +4,7 @@
   "description": "Something I shouldn't be doing.",
   "main": "index.js",
   "scripts": {
+    "postinstall": "tsc -p ./tsconfig.json",
     "test": "jest",
     "build": "tsc",
     "dev": "nodemon index.ts",
