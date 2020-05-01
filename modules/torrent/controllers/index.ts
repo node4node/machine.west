@@ -1,3 +1,3 @@
 import { MovieController } from "./movieController";
-
-export { MovieController };
+import { ShowController } from "./showController";
+export { MovieController, ShowController };

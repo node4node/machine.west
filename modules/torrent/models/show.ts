@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { v4 } from "uuid/interfaces";
 
-export interface MovieProperties {
+export interface ShowProperties {
   id: string;
   title: string;
   category: string;
@@ -17,15 +17,11 @@ export interface MovieProperties {
 
 export interface EpisodeInfo {
   imdb: string;
-  themoviedb: string;
 }
 
-export class Movie {
+export class Show {
   public get title(): string {
     return <string>this.props.title;
-  }
-  public set title(v: string) {
-    this.props.title = v;
   }
 
   public get category(): string {
@@ -91,7 +87,7 @@ export class Movie {
     this.props.info_page = v;
   }
 
-  private defaultProperties: MovieProperties = {
+  private defaultProperties: ShowProperties = {
     id: uuidv4(),
     title: "",
     category: "",
@@ -100,18 +96,16 @@ export class Movie {
     leechers: 0,
     size: 0,
     pubdate: "",
-    episode_info: { imdb: "", themoviedb: "" },
+    episode_info: { imdb: "" },
     ranked: 0,
     info_page: "",
   };
 
-  readonly id: string = "";
-
-  private constructor(private props: Partial<MovieProperties>) {
+  private constructor(private props: Partial<ShowProperties>) {
     this.props = { ...this.defaultProperties, ...this.props };
   }
 
-  public static create(props: Partial<MovieProperties>): Movie {
-    return new Movie(props);
+  public static create(props: Partial<ShowProperties>): Show {
+    return new Show(props);
   }
 }

@@ -16,6 +16,10 @@ container.register("ITorrentRepo", {
   useClass: REPOSITORIES.TorrentRepo,
 });
 
+container.register("IShowService", {
+  useClass: SERVICES.ShowService,
+});
+
 container.register("IMovieService", {
   useClass: SERVICES.MovieService,
 });
@@ -25,5 +29,6 @@ container.register("ILogger", {
 });
 
 const MovieController = container.resolve(CONTROLLERS.MovieController);
+const ShowController = container.resolve(CONTROLLERS.ShowController);
 
-export { MovieController };
+export { MovieController, ShowController };
