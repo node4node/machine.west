@@ -4,35 +4,20 @@ import { inject, injectable } from "tsyringe";
 import { Show } from "../models";
 import { QUALITIES } from "../../../utils";
 import { inspect } from "util";
-import retry from "retry";
+import { failsafe } from "../../../utils";
 
 @injectable()
 export class ShowService implements IShowService {
   constructor(@inject("ITorrentRepo") private repo: ITorrentRepo) {}
 
-  private _getShow(keyword: string) {
-    return new Promise<Show[]>((resolve, reject) => {
-      const operation = retry.operation({
-        retries: 5,
-      });
-
-      operation.attempt(async () => {
-        try {
-          const shows = await this.repo.findShows(keyword, 100);
-          return resolve(shows);
-        } catch (error) {
-          if (operation.retry(error)) {
-            return;
-          } else return reject(operation.mainError());
-        }
-      });
-    });
-  }
-
   public async getShow(keyword: string, quality: QUALITIES): Promise<Show> {
     let result = null;
     try {
-      const shows = await this._getShow(keyword);
+      const shows = await failsafe<Show[]>(
+        this.repo.findShows.bind(this.repo),
+        keyword,
+        100
+      ); // await this._getShow(keyword);
       result = this.extractIdeal(shows, quality);
     } catch (error) {
       console.error(`Experienced an error: ${inspect(error, false, 4, true)}`);

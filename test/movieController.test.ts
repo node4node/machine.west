@@ -7,17 +7,18 @@ describe("A MovieController", () => {
   beforeAll(() => {
     movieController = TorrentModule.MovieController;
   });
+
   test("Should return at least one movie", async () => {
     const result = await movieController.getMovieInTopQuality("Bank");
     expect(result.length).toBeGreaterThanOrEqual(1);
-  });
+  }, 7000);
 
   test("Should return movies with 'Avenge' in the title", async () => {
     const result = await movieController.getMovieInTopQuality("Avenge");
     expect(result.length).toBeGreaterThanOrEqual(1);
     const { title } = result[0];
     expect(title).toMatch("Avenge");
-  });
+  }, 7000);
 
   test("Should return movie with specified quality", async () => {
     const result = await movieController.getMovie(
@@ -26,11 +27,11 @@ describe("A MovieController", () => {
     );
 
     expect(result.title).toMatch("1080p");
-  });
+  }, 7000);
 
   test("Should return movie with imdb ID 'tt1598778'", async () => {
     const result = await movieController.getMovieByImdbId("tt1598778");
     const { imdb_id } = result;
     expect(imdb_id).toEqual<string>("tt1598778");
-  });
+  }, 7000);
 });

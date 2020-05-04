@@ -2,13 +2,17 @@ import { IMovieService } from "./interfaces";
 import { ITorrentRepo } from "../repos/interfaces";
 import { injectable, inject } from "tsyringe";
 import { Movie } from "../models/movie";
-import { QUALITIES } from "../../../utils";
+import { QUALITIES, failsafe } from "../../../utils";
 
 @injectable()
 export class MovieService implements IMovieService {
   constructor(@inject("ITorrentRepo") private repo: ITorrentRepo) {}
   async getMovie(keyword: string, movie_quality: QUALITIES): Promise<Movie> {
-    const movies = await this.repo.findMovies(keyword, 100);
+    const movies = await failsafe(
+      this.repo.findMovies.bind(this.repo),
+      keyword,
+      100
+    );
     const best: Movie = this.extractIdeal(movies, movie_quality);
     return best;
   }
@@ -25,7 +29,7 @@ export class MovieService implements IMovieService {
   }
   async getMovieByImdbId(id: string): Promise<Movie> {
     try {
-      const movie = await this.repo.getByImdbId(id);
+      const movie = await failsafe(this.repo.getByImdbId.bind(this.repo), id);
       return movie[0];
     } catch (e) {
       //Do some type of useful logging
@@ -33,7 +37,10 @@ export class MovieService implements IMovieService {
     }
   }
   async getMovieIn4k(movieTitle: string): Promise<Movie[]> {
-    const movies = await this.repo.findMovies(movieTitle);
+    const movies = await failsafe(
+      this.repo.findMovies.bind(this.repo),
+      movieTitle
+    );
     return movies;
   }
 }
