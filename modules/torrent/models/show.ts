@@ -17,6 +17,8 @@ export interface ShowProperties {
 
 export interface EpisodeInfo {
   imdb: string;
+  tvdb: string;
+  themoviedb: string;
 }
 
 export class Show {
@@ -96,13 +98,15 @@ export class Show {
     leechers: 0,
     size: 0,
     pubdate: "",
-    episode_info: { imdb: "" },
+    episode_info: { imdb: "", themoviedb: "", tvdb: "" },
     ranked: 0,
     info_page: "",
   };
 
-  private constructor(private props: Partial<ShowProperties>) {
-    this.props = { ...this.defaultProperties, ...this.props };
+  private props: Partial<ShowProperties>;
+
+  private constructor(props: Partial<ShowProperties>) {
+    this.props = { ...this.defaultProperties, ...props };
   }
 
   public static create(props: Partial<ShowProperties>): Show {

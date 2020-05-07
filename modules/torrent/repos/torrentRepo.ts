@@ -9,13 +9,8 @@ const { CATEGORY } = require("rarbg-api");
 
 @injectable()
 export class TorrentRepo implements ITorrentRepo {
-  constructor(
-    @inject("ITorrentClient") private torrentClient: ITorrentClient
-  ) {}
-  public async findShows(
-    keyword: string,
-    limit?: 25 | 50 | 100 | undefined
-  ): Promise<Show[]> {
+  constructor(@inject("ITorrentClient") private torrentClient: ITorrentClient) {}
+  public async findShows(keyword: string, limit?: 25 | 50 | 100 | undefined): Promise<Show[]> {
     const shows = await this.torrentClient.search(keyword, {
       limit: limit,
       category: CATEGORY["TV"],
@@ -24,8 +19,8 @@ export class TorrentRepo implements ITorrentRepo {
     });
     return shows.map(ShowMAPPER.toDomain);
   }
-  async getByImdbId(id: string): Promise<Movie[]> {
-    const movies = await this.torrentClient.search(
+  async getByImdbId(id: string, category: "TV" | "MOVIE" = "MOVIE"): Promise<Movie[] | Show[]> {
+    const data = await this.torrentClient.search(
       id,
       {
         format: "json_extended",
@@ -34,12 +29,9 @@ export class TorrentRepo implements ITorrentRepo {
       "imdb"
     );
 
-    return movies.map(MovieMAPPER.toDomain);
+    return category === "TV" ? data.map(ShowMAPPER.toDomain) : data.map(MovieMAPPER.toDomain);
   }
-  public async findMovies(
-    query: string,
-    limit: 25 | 50 | 100 = 25
-  ): Promise<Movie[]> {
+  public async findMovies(query: string, limit: 25 | 50 | 100 = 25): Promise<Movie[]> {
     const movies = await this.torrentClient.search(query, {
       limit: limit,
       category: CATEGORY["MOVIES"],

@@ -7,6 +7,11 @@ import { ShowMAPPER as MAPPER } from "../mappers/showMapper";
 
 @injectable()
 export class ShowController extends CoreController {
+  public async getShowByImdbId(id: string): Promise<ShowDTO[]> {
+    this.log(`getShowByImdbId() ID: ${id}`);
+    const show_array = await this.showService.getShowByImdbId(id);
+    return show_array.map(MAPPER.toDTO);
+  }
   constructor(@inject("IShowService") private showService: IShowService) {
     super();
   }

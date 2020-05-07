@@ -8,6 +8,7 @@ export class ShowMAPPER {
       downloadLink: x.download,
       size: x.size,
       title: x.title,
+      imdb_id: x.episode_info?.imdb,
     };
   }
 

@@ -29,7 +29,10 @@ export class MovieService implements IMovieService {
   }
   async getMovieByImdbId(id: string): Promise<Movie> {
     try {
-      const movie = await failsafe(this.repo.getByImdbId.bind(this.repo), id);
+      const movie = (await failsafe(
+        this.repo.getByImdbId.bind(this.repo),
+        id
+      )) as Movie[];
       return movie[0];
     } catch (e) {
       //Do some type of useful logging

@@ -9,7 +9,7 @@ LOGGER.info(`Current environment: [ ${CURRENT_ENVIRONMENT} ] `, {
 });
 
 showController
-  .getShow("The Outsider")
+  .getShowByImdbId("tt2442560")
   .then((show) => {
     console.log(show);
   })
